@@ -1,0 +1,107 @@
+<div class="auth-container">
+  <div class="auth-card glass-panel animate-fade-in">
+    <div class="auth-header">
+      <h2>Create Account</h2>
+      <p>Join to start managing tasks</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          placeholder="John Doe"
+          [class.is-invalid]="
+            registerForm.get('name')?.invalid && registerForm.get('name')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          *ngIf="
+            registerForm.get('name')?.hasError('required') && registerForm.get('name')?.touched
+          "
+        >
+          Name is required
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="form-control"
+          placeholder="name@company.com"
+          [class.is-invalid]="
+            registerForm.get('email')?.invalid && registerForm.get('email')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          *ngIf="
+            registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched
+          "
+        >
+          Email is required
+        </span>
+        <span
+          class="error-text"
+          *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched"
+        >
+          Please enter a valid email address
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+          placeholder="••••••••"
+          [class.is-invalid]="
+            registerForm.get('password')?.invalid && registerForm.get('password')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          *ngIf="
+            registerForm.get('password')?.hasError('required') &&
+            registerForm.get('password')?.touched
+          "
+        >
+          Password is required
+        </span>
+        <span
+          class="error-text"
+          *ngIf="
+            registerForm.get('password')?.hasError('minlength') &&
+            registerForm.get('password')?.touched
+          "
+        >
+          Password must be at least 6 characters
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Role</label>
+        <select formControlName="role" class="form-control">
+          <option value="Employee">Employee</option>
+          <option value="Team Lead">Team Lead</option>
+          <option value="Manager">Manager</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="isLoading">
+        <span *ngIf="isLoading" class="loader me-2"></span>
+        {{ isLoading ? 'Creating account...' : 'Register' }}
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Already have an account? <a routerLink="/login">Log in here</a></p>
+    </div>
+  </div>
+</div>
