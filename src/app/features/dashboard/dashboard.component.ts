@@ -52,7 +52,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.subs.add(
       this.taskService.taskCreated$.subscribe(task => {
-        if (task) {
+        const alreadyExists = this.tasks.some(t => t._id === task._id);
+        if (!alreadyExists) {
           this.tasks.unshift(task);
         }
       })
@@ -60,20 +61,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.subs.add(
       this.taskService.taskUpdated$.subscribe(task => {
-        if (task) {
-          const index = this.tasks.findIndex(t => t._id === task._id);
-          if (index !== -1) {
-            this.tasks[index] = task;
-          }
+        const index = this.tasks.findIndex(t => t._id === task._id);
+        if (index !== -1) {
+          this.tasks[index] = task;
         }
       })
     );
 
     this.subs.add(
       this.taskService.taskDeleted$.subscribe(taskId => {
-        if (taskId) {
-          this.tasks = this.tasks.filter(t => t._id !== taskId);
-        }
+        this.tasks = this.tasks.filter(t => t._id !== taskId);
       })
     );
   }

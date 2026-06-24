@@ -24,6 +24,11 @@ export class LoginComponent {
   });
 
   isLoading: boolean = false;
+  showPassword: boolean = false;
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   onSubmit() {
     if (this.loginForm.invalid) {

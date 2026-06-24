@@ -26,6 +26,11 @@ export class RegisterComponent {
   });
 
   isLoading: boolean = false;
+  showPassword: boolean = false;
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   onSubmit() {
     if (this.registerForm.invalid) {

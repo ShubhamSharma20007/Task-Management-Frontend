@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import environments from '../../../environments/environment';
 
@@ -11,9 +11,9 @@ export class TaskService {
   private apiUrl = `${environments.apiURL}/tasks`;
   private socket: Socket;
 
-  public taskCreated$ = new BehaviorSubject<any>(null);
-  public taskUpdated$ = new BehaviorSubject<any>(null);
-  public taskDeleted$ = new BehaviorSubject<string | null>(null);
+  public taskCreated$ = new Subject<any>();
+  public taskUpdated$ = new Subject<any>();
+  public taskDeleted$ = new Subject<string>();
 
   constructor(private http: HttpClient) {
     this.socket = io(environments.socketURL, {
